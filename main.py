@@ -103,4 +103,5 @@ class QrImage(tk.Canvas):
         self.delete('all')
 
 
-App()
+if __name__ == '__main__':
+    App()
