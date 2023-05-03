@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import customtkinter as ctk
-from PIL import Image, ImageTk
+from PIL import ImageTk
 import qrcode
 
 try:
@@ -29,6 +29,7 @@ class App(ctk.CTk):
         self.bind_all('<Return>', self.save)
 
         self.raw_image = None
+        self.tk_image = None
         self.qr_code = QrImage(self)
 
         self.mainloop()
@@ -39,7 +40,7 @@ class App(ctk.CTk):
         if current_text:
             self.raw_image = qrcode.make(current_text)
             self.tk_image = ImageTk.PhotoImage(self.raw_image.resize((160, 160)))
-            self.qr_code.update(self.tk_image)
+            self.qr_code.update_image(self.tk_image)
         else:
             self.qr_code.clear()
             self.raw_image = None
@@ -94,7 +95,7 @@ class QrImage(tk.Canvas):
                          highlightthickness=0, relief='ridge')
         self.place(relx=0.5, rely=0.4, relwidth=0.4, relheight=0.4, anchor='center')
 
-    def update(self, image_tk):
+    def update_image(self, image_tk):
         self.clear()
         self.create_image(0, 0, image=image_tk, anchor='nw')
 
